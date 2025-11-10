@@ -53,7 +53,6 @@ const Login = () => {
       }
 
       if (result?.success) {
-        showToast("success", `${signState} successful! Welcome to Netflix`);
         navigate("/");
       } else {
         showToast(
