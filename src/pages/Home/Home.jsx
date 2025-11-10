@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
-import "./Home.css";
-import Navbar from "../../components/Navbar/Navbar";
-import play_icon from "../../assets/play_icon.png";
-import info_icon from "../../assets/info_icon.png";
-import netflix_spinner from "../../assets/netflix_spinner.gif";
-import TitleCards from "../../components/TitleCards/TitleCards";
-import Footer from "../../components/Footer/Footer";
-import { TMDB_Access_Key } from "../../config";
-import { useNavigate } from "react-router-dom";
-import { auth } from "../../firebase"; 
+import React, { useState, useEffect } from 'react';
+import './Home.css';
+import Navbar from '../../components/Navbar/Navbar';
+import play_icon from '../../assets/play_icon.png';
+import info_icon from '../../assets/info_icon.png';
+import netflix_spinner from '../../assets/netflix_spinner.gif';
+import TitleCards from '../../components/TitleCards/TitleCards';
+import Footer from '../../components/Footer/Footer';
+import { TMDB_Access_Key } from '../../config';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../../firebase'; 
+import { onAuthStateChanged } from 'firebase/auth';
 
 const Home = () => {
   const [heroMovie, setHeroMovie] = useState(null);
@@ -17,18 +18,22 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!auth.currentUser) {
-      navigate("/login");
-    }
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user)
+        navigate("/login");
+    })
+    return () => unsubscribe();
   }, [navigate]);
 
   useEffect(() => {
+    const controller = new AbortController();
     const options = {
       method: "GET",
       headers: {
         accept: "application/json",
         Authorization: `Bearer ${TMDB_Access_Key}`,
       },
+      signal: controller.signal,
     };
 
     fetch(
@@ -46,16 +51,19 @@ const Home = () => {
         setLoading(false);
       })
       .catch((err) => {
+        if (err.name === "AbortError") return
         console.error(err);
         setError("Failed to load movies");
         setLoading(false);
       });
+
+      return () => controller.abort();
   }, []);
 
   if (loading) {
     return (
       <div className="home-spinner">
-        <img src={netflix_spinner} alt="Loading..." />
+        <img src={netflix_spinner} alt="Loading spinner" />
       </div>
     );
   }
@@ -78,17 +86,18 @@ const Home = () => {
           className="banner-img"
         />
         <div className="hero-caption">
+          <h1 className="hero-title-text">{heroMovie.title}</h1>
           <p>{heroMovie.overview}</p>
           <div className="hero-btns">
             <button
               className="btn"
               onClick={() => navigate(`/player/${heroMovie.id}`)}
             >
-              <img src={play_icon} alt="" />
+              <img src={play_icon} alt="play_icon" />
               Play
             </button>
             <button className="btn dark-btn">
-              <img src={info_icon} alt="" />
+              <img src={info_icon} alt="info_icon" />
               More Info
             </button>
           </div>
@@ -99,7 +108,7 @@ const Home = () => {
         <TitleCards title={"Blockbuster Movies"} category={"top_rated"} />
         <TitleCards title={"Only on Netflix"} category={"popular"} />
         <TitleCards title={"Upcoming"} category={"upcoming"} />
-        <TitleCards title={"Top Pics for You"} category={"now_playing"} />
+        <TitleCards title={"Top Picks for You"} category={"now_playing"} />
       </div>
       <Footer />
     </div>

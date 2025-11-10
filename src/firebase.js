@@ -6,7 +6,11 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { 
+  addDoc, 
+  collection, 
+  getFirestore 
+} from "firebase/firestore";
 import { toast } from "react-toastify";
 
 const app = initializeApp(firebaseConfig);
@@ -17,16 +21,19 @@ const signUp = async (name, email, password) => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       const user = res.user;
+
       await addDoc(collection(db, "user"), {
         uid: user.uid,
         name,
         authProvider: "local",
         email,
       });
+
       return { success: true };
     } catch (error) {
       console.log(error);
-      toast.error(error.code.split('/')[1].split('-').join(' '));
+      const message = error.code?.split("/")[1]?.replace(/-/g, " ") || "SignUp failed";
+      toast.error(message);
       return { success: false, error: error.message };
     }
   };
@@ -37,7 +44,8 @@ const signUp = async (name, email, password) => {
       return { success: true };
     } catch (error) {
       console.log(error);
-      toast.error(error.code.split('/')[1].split('-').join(' '));
+      const message = error.code?.split("/")[1]?.replace(/-/g, " ") || "Login failed";
+      toast.error(message);
       return { success: false, error: error.message };
     }
   };

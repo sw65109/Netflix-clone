@@ -5,18 +5,21 @@ import { auth, login, signUp } from "../../firebase";
 import netflix_spinner from "../../assets/netflix_spinner.gif";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "../../utils/toastUtils";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Login = () => {
   const navigate = useNavigate();
   const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
-    const user = auth.currentUser
-    if (user) {
-      navigate("/");
-    } else {
-      setCheckingAuth(false);
-    }
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate("/");
+      } else {
+        setCheckingAuth(false);
+      }
+    });
+    return () => unsubscribe();
   }, [navigate]);
 
   const [signState, setSignState] = useState("Sign In");
@@ -34,13 +37,12 @@ const Login = () => {
       setLoading(false);
       return;
     }
-    
+
     if (signState === "Sign Up" && !name) {
       showToast("error", "Please enter your name");
       setLoading(false);
       return;
     }
-    
 
     try {
       let result;
@@ -54,44 +56,34 @@ const Login = () => {
         showToast("success", `${signState} successful! Welcome to Netflix`);
         navigate("/");
       } else {
-        showToast("error", `${signState} failed: ${result?.error || "Unknown error"}`);
+        showToast(
+          "error",
+          `${signState} failed: ${result?.error || "Unknown error"}`
+        );
       }
-      
     } catch (error) {
       console.error(error);
       showToast("error", "An unexpected error occurred. Please try again.");
     }
-    
+
     setLoading(false);
   };
 
-  if (checkingAuth) {
+  if (checkingAuth || loading) {
     return (
       <div className="login-spinner">
-        <img src={netflix_spinner} alt="Loading..." />
-      </div>
-    );
-  }
-  
-  if (loading) {
-    return (
-      <div className="login-spinner">
-        <img src={netflix_spinner} alt="Loading..." />
+        <img src={netflix_spinner} alt="Loading spinner" />
       </div>
     );
   }
 
-  return loading ? (
-    <div className="login-spinner">
-      <img src={netflix_spinner} alt="Loading..." />
-    </div>
-  ) : (
+  return (
     <div className="login">
       <img src={logo} className="login-logo" alt="Netflix Logo" />
       <div className="login-form">
         <h1>{signState}</h1>
         <form>
-          {signState === "Sign Up" ? (
+          {signState === "Sign Up" && (
             <input
               value={name}
               onChange={(event) => {
@@ -100,9 +92,8 @@ const Login = () => {
               type="text"
               placeholder="Your Name"
               aria-label="Your Name"
+              required
             />
-          ) : (
-            <></>
           )}
           <input
             value={email}
@@ -112,6 +103,7 @@ const Login = () => {
             type="email"
             placeholder="Email"
             aria-label="Email"
+            required
           />
           <input
             value={password}
@@ -121,6 +113,8 @@ const Login = () => {
             type="password"
             placeholder="Password"
             aria-label="Password"
+            required
+            minLength={6}
           />
           <button onClick={user_auth} type="submit">
             {signState}
@@ -128,7 +122,7 @@ const Login = () => {
           <div className="form-help">
             <div className="remeber">
               <label className="remember">
-                <input type="checkbox" />
+                <input type="checkbox" id="rememberMe" />
                 Remember Me
               </label>
             </div>
