@@ -12,20 +12,12 @@ export const showToast = (type, message, options = {}) => {
     ...options,
   };
 
-  switch (type) {
-    case 'success':
-      toast.success(message, baseOptions);
-      break;
-    case 'error':
-      toast.error(message, baseOptions);
-      break;
-    case 'info':
-      toast.info(message, baseOptions);
-      break;
-    case 'warn':
-      toast.warn(message, baseOptions);
-      break;
-    default:
-      toast(message, baseOptions);
-  }
+  const toastMap = {
+    success: toast.success,
+    error: toast.error,
+    info: toast.info,
+    warn: toast.warn,
+  };
+   const toastFn = toastMap[type || toast];
+   toastFn(message, baseOptions);
 };

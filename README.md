@@ -1,108 +1,97 @@
-# 🎬 Netflix Clone - React
+# Netflix Clone - React
 
-A pixel-perfect Netflix clone built with React 19, Firebase, and TMDB API. This application replicates the core Netflix experience with user authentication, dynamic movie content, and a responsive design.
+A pixel-perfect Netflix clone built with React 19, Firebase, and TMDB API. The project now includes a persistent My List experience, a global search overlay, refined toast feedback, and guard rails to prevent accidental scrolling.
 
 ![Netflix Clone Demo](https://via.placeholder.com/800x400/000000/FFFFFF?text=Netflix+Clone+Demo)
 
-## 🚀 Live Demo
+## Live Demo
 
-[View Live Demo](your-deployment-url-here) | [View Repository](https://github.com/your-username/netflix-clone)
-
----
-
-<details>
-<summary>📋 <strong>Table of Contents</strong></summary>
-
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Installation](#-installation)
-- [Environment Setup](#-environment-setup)
-- [Usage](#-usage)
-- [Project Structure](#-project-structure)
-- [API Integration](#-api-integration)
-- [Authentication](#-authentication)
-- [Responsive Design](#-responsive-design)
-- [Contributing](#-contributing)
-- [License](#-license)
-
-</details>
+[View Live Demo](your-deployment-url-here) | [View Repository](https://github.com/sw659109/Netflix-clone)
 
 ---
 
-## ✨ Features
-
+<!-- markdownlint-disable MD033 -->
 <details>
-<summary><strong>🔐 User Authentication</strong></summary>
+<summary><strong>Table of Contents</strong></summary>
 
-- **Firebase Authentication Integration**
-- User registration with email/password
-- Secure login system with form validation
-- Automatic session management with `onAuthStateChanged`
-- Protected routes with authentication guards
-- Real-time authentication state monitoring
-- Logout functionality with toast confirmations
-- **Multi-layer authentication checks** (App-level + component-level)
-- **Authentication state persistence** across browser sessions
-- **Immediate redirect prevention** for logged-in users accessing login page
-
-</details>
-
-<details>
-<summary><strong>🎥 Movie Content</strong></summary>
-
-- **Dynamic Hero Section** with random featured movies
-- **Multiple Movie Categories**:
-  - Popular on Netflix
-  - Blockbuster Movies
-  - Top Rated
-  - Upcoming
-  - Now Playing
-- **Real-time data** from TMDB API
-- High-quality movie posters and backdrops
-- Movie trailers integration via YouTube
-
-</details>
-
-<details>
-<summary><strong>🎮 Interactive Features</strong></summary>
-
-- **Horizontal Scrolling** movie carousels (Netflix-style)
-- **Video Player** with YouTube trailer integration and authentication checks
-- **Smooth Navigation** between pages with route protection
-- **Loading States** with Netflix-branded spinners across all components
-- **Error Handling** with comprehensive error boundaries and fallbacks
-- **Toast Notifications** for user feedback with custom styling
-- **Memory Leak Prevention** with proper event listener cleanup
-- **Professional User Feedback** with success/error/info toast messages
-
-</details>
-
-<details>
-<summary><strong>📱 Responsive Design</strong></summary>
-
-- **Mobile-First Approach**
-- Responsive breakpoints: 500px, 800px, 1024px
-- Adaptive layout for all screen sizes
-- Touch-friendly interface
-- Optimized images and content
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Environment Setup](#environment-setup)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [API Integration](#api-integration)
+- [Authentication](#authentication)
+- [Responsive Design](#responsive-design)
+- [Performance Features](#performance-features)
+- [Contributing](#contributing)
+- [Known Issues & Roadmap](#known-issues--roadmap)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+- [Contact](#contact)
 
 </details>
 
 ---
 
-## 🛠 Tech Stack
+## Features
+
+<details>
+<summary><strong>User Authentication</strong></summary>
+
+- Firebase Authentication integration with email/password onboarding
+- Multi-layer route guarding and redirect prevention for logged-in users
+- Session persistence wired through `onAuthStateChanged`
+- Logout flow with polished toast confirmations
+- Real-time auth state monitoring across the app shell and pages
+
+</details>
+
+<details>
+<summary><strong>Discovery & Content</strong></summary>
+
+- Dynamic hero section seeded from TMDB now playing titles
+- Horizontal carousels for Popular, Blockbusters, Top Rated, Upcoming, and more
+- Persistent **My List** powered by a reusable `useMyList` hook and context
+- TMDB multi-search overlay with debounced queries and Add/Remove controls
+- Toast messages narrating add/remove actions for clarity
+
+</details>
+
+<details>
+<summary><strong>Interaction Enhancements</strong></summary>
+
+- Netflix-style horizontal scrolling protected against vertical wheel jumps
+- Player page with authentication checks and trailer playback
+- Toast utilities consolidated for consistent success/info/error styling
+- Defensive event-listener cleanup to avoid leaks when navigating between pages
+
+</details>
+
+<details>
+<summary><strong>Responsive Design</strong></summary>
+
+- Mobile-first layout that scales across 500px, 800px, and 1024px breakpoints
+- Touch-friendly card interactions and simplified navigation for handheld devices
+- Optimized imagery using TMDB poster/backdrop resolutions with fallbacks
+
+</details>
+
+---
+
+## Tech Stack
 
 <details>
 <summary><strong>Frontend Technologies</strong></summary>
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| **React** | 19.1.1 | UI Library with Hooks |
-| **Vite** | 7.1.7 | Build Tool & Dev Server |
-| **React Router DOM** | 7.9.2 | Client-side Routing & Navigation |
-| **React Toastify** | 11.0.5 | Toast Notifications System |
-| **Firebase** | 12.3.0 | Authentication & Database |
-| **CSS3** | - | Styling & Responsive Design |
+| React | 19.1.1 | UI library with hooks |
+| Vite | 7.1.7 | Build tool & dev server |
+| React Router DOM | 7.9.2 | Client-side routing |
+| React Toastify | 11.0.5 | Toast notifications |
+| Firebase | 12.3.0 | Authentication + data |
+| CSS3 | - | Styling & responsive layout |
 
 </details>
 
@@ -111,31 +100,31 @@ A pixel-perfect Netflix clone built with React 19, Firebase, and TMDB API. This 
 
 | Service | Purpose |
 |---------|---------|
-| **Firebase Auth** | User Authentication |
-| **Firestore** | User Data Storage |
-| **TMDB API** | Movie Data & Images |
-| **YouTube API** | Video Trailers |
+| Firebase Auth | User authentication |
+| Firestore | User persistence roadmap |
+| TMDB API | Movie data & artwork |
+| YouTube API | Trailer playback |
 
 </details>
 
 <details>
-<summary><strong>Development Tools</strong></summary>
+<summary><strong>Development Tooling</strong></summary>
 
-- **ESLint** - Code linting and formatting
-- **Vite** - Fast development server with HMR
-- **Modern ES6+** - Latest JavaScript features
+- ESLint and markdownlint for code quality
+- Vite dev server with HMR for rapid feedback
+- Modern ES2023+ syntax and tooling
 
 </details>
 
 ---
 
-## 🚀 Installation
+## Installation
 
 <details>
 <summary><strong>Prerequisites</strong></summary>
 
 - Node.js (v16 or higher)
-- npm or yarn package manager
+- npm or yarn
 - Firebase account
 - TMDB API account
 
@@ -145,17 +134,20 @@ A pixel-perfect Netflix clone built with React 19, Firebase, and TMDB API. This 
 <summary><strong>Step-by-Step Setup</strong></summary>
 
 1. **Clone the repository**
+
    ```bash
-   git clone https://github.com/your-username/netflix-clone.git
-   cd netflix-clone
+   git clone https://github.com/sw659109/Netflix-clone.git
+   cd Netflix-clone
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
+
    ```bash
    # Create .env file in root directory
    touch .env
@@ -163,12 +155,14 @@ A pixel-perfect Netflix clone built with React 19, Firebase, and TMDB API. This 
 
 4. **Configure Firebase and TMDB** (see Environment Setup below)
 
-5. **Start development server**
+5. **Start the development server**
+
    ```bash
    npm run dev
    ```
 
 6. **Build for production**
+
    ```bash
    npm run build
    ```
@@ -177,16 +171,16 @@ A pixel-perfect Netflix clone built with React 19, Firebase, and TMDB API. This 
 
 ---
 
-## ⚙️ Environment Setup
+## Environment Setup
 
 <details>
 <summary><strong>Firebase Configuration</strong></summary>
 
 1. Create a Firebase project at [Firebase Console](https://console.firebase.google.com)
 2. Enable Authentication with Email/Password
-3. Create a Firestore database
-4. Get your Firebase config object
-5. Update `src/config.js` with your Firebase credentials:
+3. Create a Firestore database (optional roadmap feature)
+4. Grab your Firebase config object
+5. Update `src/config.js` with your credentials:
 
 ```javascript
 const firebaseConfig = {
@@ -204,9 +198,9 @@ const firebaseConfig = {
 <details>
 <summary><strong>TMDB API Setup</strong></summary>
 
-1. Create an account at [TMDB](https://www.themoviedb.org/signup)
-2. Request an API key from your account settings
-3. Add your TMDB access token to `src/config.js`:
+1. Sign up at [TMDB](https://www.themoviedb.org/signup)
+2. Request a read access token (v4)
+3. Add your token to `src/config.js`:
 
 ```javascript
 const TMDB_Access_Key = "your-tmdb-access-token";
@@ -216,60 +210,62 @@ const TMDB_Access_Key = "your-tmdb-access-token";
 
 ---
 
-## 🎯 Usage
+## Usage
 
 <details>
 <summary><strong>Authentication Flow</strong></summary>
 
-1. **New Users**: Click "Sign Up" to create an account
-2. **Existing Users**: Use "Sign In" with email/password
-3. **Automatic Redirect**: Authenticated users go to home page
-4. **Session Management**: Stay logged in across browser sessions
-5. **Logout**: Click profile dropdown → "Sign Out"
+1. **New users**: Click Sign Up to create an account
+2. **Returning users**: Sign in with email/password
+3. **Automatic redirect**: Authenticated visitors land on the home page
+4. **Session persistence**: Stay logged in between refreshes
+5. **Logout**: Use the profile menu to trigger sign out with toast feedback
 
 </details>
 
 <details>
 <summary><strong>Navigation Guide</strong></summary>
 
-- **Home Page**: Browse featured movies and categories
-- **Movie Cards**: Click any movie to view trailer
-- **Video Player**: Watch trailers with back navigation
-- **Responsive Menu**: Mobile-friendly navigation
-- **Scroll Browsing**: Horizontal scroll through movie categories
+- Home showcases hero, carousels, and My List actions
+- Search button opens the new overlay with instant TMDB results
+- Player route streams trailers with auth gatekeeping
+- Responsive navbar adapts to viewport width and scroll position
 
 </details>
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 <details>
 <summary><strong>Directory Overview</strong></summary>
 
-```
+```text
 netflix-clone/
 ├── public/
 │   ├── background_banner.jpg
 │   └── netflix_favicon.ico
 ├── src/
 │   ├── assets/
-│   │   ├── cards/          # Movie card images
-│   │   └── *.png|*.svg     # UI icons and images
+│   │   ├── cards/
+│   │   └── assorted UI imagery
 │   ├── components/
-│   │   ├── Footer/         # Site footer
-│   │   ├── Navbar/         # Navigation bar
-│   │   └── TitleCards/     # Movie carousels
+│   │   ├── Footer/
+│   │   ├── Navbar/
+│   │   ├── TitleCards/
+│   │   └── SearchOverlay/
+│   ├── hooks/
+│   │   └── useMyList.js
 │   ├── pages/
-│   │   ├── Home/           # Main dashboard
-│   │   ├── Login/          # Authentication
-│   │   └── Player/         # Video player
+│   │   ├── Home/
+│   │   ├── Login/
+│   │   └── Player/
 │   ├── utils/
-│   │   └── toastUtils.jsx  # Toast notification helper
-│   ├── App.jsx             # Main app component
-│   ├── config.js           # API configurations
-│   ├── firebase.js         # Firebase setup
-│   └── main.jsx            # App entry point
+│   │   └── toastUtils.js
+│   ├── App.jsx
+│   ├── config.js
+│   ├── firebase.js
+│   └── main.jsx
 └── package.json
 ```
 
@@ -278,212 +274,187 @@ netflix-clone/
 <details>
 <summary><strong>Component Architecture</strong></summary>
 
-- **App.jsx**: Main routing and global authentication state management with `onAuthStateChanged`
-- **Home**: Landing page with dynamic hero section and categorized movie collections
-- **Login**: Authentication form with validation, sign up/in toggle, and auth state checking
-- **Player**: Video player for movie trailers with authentication guards and error handling
-- **Navbar**: Navigation with user profile, logout functionality, and scroll effects
-- **TitleCards**: Reusable movie carousel component with horizontal scrolling and error states
-- **Footer**: Site footer with Netflix-style links and responsive design
-- **Utils**: Toast notification utilities for consistent user feedback
+- `App.jsx`: routing shell with auth listener
+- `Navbar`: manages profile dropdown, search trigger, and sticky behavior
+- `TitleCards`: reusable TMDB carousel with add/remove hooks and wheel guard
+- `SearchOverlay`: TMDB multi-search with debounced fetch, fallback imagery, and My List toggles
+- `useMyList`: context hook persisting selections to local storage for now
+- `toastUtils`: centralizes toast styling and defaults
 
 </details>
 
 ---
 
-## 🔌 API Integration
+## API Integration
 
 <details>
 <summary><strong>TMDB API Endpoints</strong></summary>
 
 | Endpoint | Purpose | Usage |
 |----------|---------|-------|
-| `/movie/popular` | Featured movies | Hero section |
-| `/movie/top_rated` | High-rated films | "Blockbuster Movies" |
-| `/movie/upcoming` | Coming soon | "Upcoming" section |
-| `/movie/now_playing` | Current releases | "Now Playing" |
-| `/movie/{id}/videos` | Movie trailers | Video player |
+| `/movie/popular` | Featured movies | Hero + Popular row |
+| `/movie/top_rated` | High-rated films | Blockbuster Movies |
+| `/movie/upcoming` | Coming soon | Upcoming row |
+| `/movie/now_playing` | Current releases | Now Playing row |
+| `/search/multi` | Search overlay | Global search experience |
+| `/movie/{id}/videos` | Trailer data | Player view |
 
 </details>
 
 <details>
 <summary><strong>Data Flow</strong></summary>
 
-1. **Authentication**: Firebase handles user auth state with real-time listeners
-2. **Movie Data**: TMDB API provides movie information with proper error handling
-3. **Real-time Updates**: Components fetch fresh data on mount with loading states
-4. **Error Handling**: Graceful fallbacks for API failures with toast notifications
-5. **Loading States**: Professional Netflix-branded spinners during data fetch
-6. **State Management**: Efficient state updates with proper dependency management
-7. **Memory Management**: Cleanup of event listeners and subscriptions
+1. Auth listener hydrates global context
+2. Rows fetch TMDB data on mount with abort safety
+3. Search overlay debounces queries and filters to movies/TV
+4. My List toggles sync payloads across TitleCards and SearchOverlay
+5. Toast utilities surface success/error states to users
 
 </details>
 
 ---
 
-## 🔐 Authentication
+## Authentication
 
 <details>
 <summary><strong>Firebase Auth Implementation</strong></summary>
 
-- **onAuthStateChanged**: Real-time auth state monitoring with global listener
-- **Protected Routes**: Automatic redirection based on auth status at app level
-- **Component-Level Guards**: Individual components verify authentication state
-- **User Data Storage**: Firestore integration for user profiles and metadata
-- **Error Handling**: User-friendly error messages with toast notifications
-- **Session Persistence**: Automatic login across browser sessions and page refreshes
-- **Duplicate Login Prevention**: Prevents authenticated users from accessing login page
-- **Memory Management**: Proper cleanup of authentication listeners
+- Real-time `onAuthStateChanged` listener with cleanup
+- Route protection across the router and individual pages
+- Toast guidance for sign-in, sign-out, and error flows
+- Planned Firestore persistence for user-specific lists
 
 </details>
 
 <details>
 <summary><strong>Security Features</strong></summary>
 
-- Email/password validation
-- Firebase security rules
-- Protected API routes
-- Secure token management
-- Automatic session timeout handling
+- Email/password validation patterns
+- Firebase security rules (see console configuration)
+- Protected TMDB usage via server-side token storage recommendation
+- Session persistence balanced with manual sign-out controls
 
 </details>
 
 ---
 
-## 📱 Responsive Design
+## Responsive Design
 
 <details>
 <summary><strong>Breakpoint Strategy</strong></summary>
 
-| Screen Size | Breakpoint | Layout Changes |
-|-------------|------------|----------------|
-| **Mobile** | < 500px | Compact navigation, smaller images |
-| **Tablet** | 500px - 800px | Medium layouts, hidden menu items |
-| **Desktop** | > 800px | Full navigation, large images |
+| Screen Size | Layout Adjustments |
+|-------------|--------------------|
+| < 500px | Compact navbar, stacked hero, condensed cards |
+| 500px - 800px | Medium grid, hidden secondary nav items |
+| > 800px | Full navigation, widescreen hero imagery |
 
 </details>
 
 <details>
 <summary><strong>Mobile Optimizations</strong></summary>
 
-- Touch-friendly interface
-- Optimized image sizes
-- Compressed navigation menu
-- Swipe-friendly carousels
-- Fast loading on mobile networks
+- Reduced initial payload via dynamic imports where practical
+- Touch-friendly buttons and larger tap targets
 
 </details>
 
 ---
 
-## 🚀 Performance Features
+## Performance Features
 
 <details>
 <summary><strong>Optimization Techniques</strong></summary>
 
-- **Code Splitting**: React Router lazy loading and component optimization
-- **Image Optimization**: TMDB responsive images with proper fallbacks
-- **Memory Management**: Comprehensive event listener cleanup and leak prevention
-- **Loading States**: Professional spinners and perceived performance improvements
-- **Error Boundaries**: Graceful error handling with user-friendly fallbacks
-- **Authentication Optimization**: Efficient auth state management with minimal re-renders
-- **API Optimization**: Proper dependency management in useEffect hooks
-- **Vite Build**: Optimized production builds with tree shaking
+- Debounced fetch calls and abort controllers to avoid race conditions
+- Toast feedback throttled to prevent spam on rapid toggles
+- Wheel event guard to skip unnecessary re-renders
+- Vite build optimizations with tree shaking and code splitting
 
 </details>
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 <details>
 <summary><strong>Development Guidelines</strong></summary>
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
+3. Commit changes (`git commit -m "Add amazing feature"`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+5. Open a pull request
 
 </details>
 
 <details>
 <summary><strong>Code Standards</strong></summary>
 
-- Follow React best practices
-- Use functional components with hooks
-- Implement proper error handling
-- Add loading states for async operations
-- Maintain responsive design principles
-- Clean up event listeners and subscriptions
+- Prefer functional components and hooks
+- Clean up subscriptions, timeouts, and listeners
+- Keep async flows wrapped with error handling and toasts
+- Maintain responsive design parity across breakpoints
 
 </details>
 
 ---
 
-## 🐛 Known Issues & Roadmap
+## Known Issues & Roadmap
 
 <details>
 <summary><strong>Current Limitations</strong></summary>
 
-- [ ] Environment variables need to be moved to .env file for security
-- [x] Authentication state management implemented across all components
-- [x] Memory leak prevention with proper cleanup
-- [x] Toast notification system integrated
-- [x] Multi-layer authentication guards implemented
-- [ ] TypeScript migration for better type safety
-- [ ] Unit tests implementation (Jest + React Testing Library)
-- [ ] PWA features for offline support
-- [ ] ESLint exhaustive-deps warnings cleanup
+- [ ] Move sensitive keys into `.env`
+- [ ] Expand My List persistence to Firestore
+- [ ] Add unit tests (React Testing Library + Vitest)
+- [ ] Migrate to TypeScript for stronger typing
+- [x] Debounced search overlay with TMDB integration
+- [x] Consistent toast messaging across components
 
 </details>
 
 <details>
 <summary><strong>Future Enhancements</strong></summary>
 
-- [ ] User watchlist functionality with Firestore persistence
-- [ ] Movie search feature with TMDB search endpoints
-- [ ] Multiple user profiles with role-based access
-- [ ] Content recommendations based on viewing history
-- [ ] Dark/light theme toggle with user preferences
-- [ ] Internationalization support (i18n)
-- [ ] Email verification for new user registration
-- [ ] Password reset functionality
-- [ ] User profile management and settings
-- [ ] Movie rating and review system
+- [ ] Multi-profile support with avatar selection
+- [ ] Recommendation engine based on viewing history
+- [ ] PWA support for offline browsing
+- [ ] Email verification and password reset flows
+- [ ] Theme toggle (light/dark) with persisted preference
 
 </details>
 
 ---
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- **Netflix** for design inspiration
-- **TMDB** for movie database API
-- **Firebase** for authentication services
-- **React Team** for the amazing framework
-- **Vite** for lightning-fast development experience
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 📞 Contact
+## Acknowledgments
 
-**Your Name** - [@yourtwitter](https://twitter.com/yourtwitter) - your.email@example.com
+- Netflix for design inspiration
+- TMDB for providing movie metadata and imagery
+- Firebase for authentication services
+- React team for the core framework
+- Vite for the rapid development experience
 
-Project Link: [https://github.com/your-username/netflix-clone](https://github.com/your-username/netflix-clone)
+---
+
+## Contact
+
+Scott Weller - [sjweller65109@gmail.com](mailto:sjweller65109@gmail.com)
+
+Project Link: [https://github.com/sw659109/Netflix-clone](https://github.com/sw659109/Netflix-clone)
 
 ---
 
 <div align="center">
 
-**⭐ Star this repo if you found it helpful!**
+**Star this repo if you found it helpful!**
 
-Made with ❤️ and ☕ by [Your Name]
+Made with love and coffee by Scott Weller
 
 </div>

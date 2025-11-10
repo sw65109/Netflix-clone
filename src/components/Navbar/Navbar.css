@@ -1,4 +1,233 @@
-.navbar{
+.navbar {
+    width: 100%;
+    padding: 20px 6%;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    font-size: 14px;
+    color: #e5e5e5;
+    background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 10%, transparent);
+    z-index: 1;
+  }
+  
+  .navbar-logo {
+    width: 90px;
+  }
+  
+  .navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .nav-link {
+    color: #e5e5e5;
+    text-decoration: none;
+    position: relative;
+    padding: 4px 0;
+  }
+  
+  .nav-link:hover,
+  .nav-link:focus {
+    color: #fff;
+  }
+  
+  .nav-link--active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 2px;
+    background: #e50914;
+    border-radius: 1px;
+  }
+  
+  .navbar-right {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon-button img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .profile-switcher {
+    position: relative;
+  }
+  
+  .profile-switcher__trigger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font: inherit;
+  }
+  
+  .profile-switcher__menu {
+    position: absolute;
+    top: 120%;
+    left: 0;
+    background: #191919;
+    border-radius: 4px;
+    padding: 8px 0;
+    min-width: 160px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    list-style: none;
+  }
+  
+  .profile-switcher__menu li button {
+    width: 100%;
+    padding: 8px 16px;
+    background: none;
+    border: none;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  .profile-switcher__menu li button:hover,
+  .profile-switcher__menu li button:focus {
+    background: rgba(229, 9, 20, 0.2);
+  }
+  
+  .navbar-profile {
+    position: relative;
+  }
+  
+  .navbar-profile__trigger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .profile {
+    border-radius: 4px;
+    height: 30px;
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background: #191919;
+    padding: 12px 16px;
+    border-radius: 4px;
+    display: none;
+    min-width: 120px;
+  }
+  
+  .navbar-profile:hover .dropdown,
+  .navbar-profile:focus-within .dropdown {
+    display: block;
+  }
+  
+  .dropdown button {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+  }
+  
+  .nav-dark {
+    background: #141414;
+    transition: background 0.2s ease;
+  }
+  
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  
+  .hamburger span {
+    width: 22px;
+    height: 2px;
+    background: #fff;
+    display: block;
+  }
+  
+  /* Responsive tweaks */
+  @media (max-width: 1024px) {
+    .navbar {
+      padding: 20px 4%;
+    }
+  
+    .nav-links {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: rgba(0, 0, 0, 0.95);
+      padding: 16px 0;
+      gap: 12px;
+      transform: translateY(-10px);
+      opacity: 0;
+      pointer-events: none;
+    }
+  
+    .nav-links--open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+  
+    .nav-links li {
+      text-align: center;
+    }
+  
+    .navbar-right {
+      gap: 12px;
+    }
+  
+    .hamburger {
+      display: flex;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .navbar-logo {
+      width: 70px;
+    }
+  
+    .icon-button img {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+/* .navbar{
     width: 100%;
     padding: 20px 6%;
     display: flex;
@@ -86,4 +315,4 @@
     .navbar-right{
         gap: 10px;
     }
-}
+} */
