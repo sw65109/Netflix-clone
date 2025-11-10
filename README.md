@@ -1,12 +1,10 @@
 # Netflix Clone - React
 
-A pixel-perfect Netflix clone built with React 19, Firebase, and TMDB API. The project now includes a persistent My List experience, a global search overlay, refined toast feedback, and guard rails to prevent accidental scrolling.
-
-![Netflix Clone Demo](https://via.placeholder.com/800x400/000000/FFFFFF?text=Netflix+Clone+Demo)
+A pixel-perfect Netflix clone built with React 19, Firebase, and TMDB API. The project now includes a persistent My List experience, a global search overlay, refined toast feedback.
 
 ## Live Demo
 
-[View Live Demo](your-deployment-url-here) | [View Repository](https://github.com/sw659109/Netflix-clone)
+🚀 **[View Live Demo](https://netflix-clone-taupe-two-69.vercel.app)** | 📂 **[View Repository](https://github.com/sw65109/Netflix-clone)**
 
 ---
 
@@ -136,7 +134,7 @@ A pixel-perfect Netflix clone built with React 19, Firebase, and TMDB API. The p
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/sw659109/Netflix-clone.git
+   git clone https://github.com/sw65109/Netflix-clone.git
    cd Netflix-clone
    ```
 
