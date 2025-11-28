@@ -29,8 +29,19 @@
         width: 25px;
     }
     .footer ul{
-        grid-template-columns: auto auto;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         gap: 8px;
         font-size: 14px;
+    }
+}
+
+@media (max-width: 500px) {
+    .footer {
+        padding: 24px 5%;
+    }
+
+    .footer-icons {
+        flex-wrap: wrap;
+        gap: 12px;
     }
 }

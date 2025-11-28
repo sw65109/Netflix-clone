@@ -19,16 +19,16 @@ const MyList = () => {
   };
 
   return (
-    <div className="mylist-layout">
+    <div className="MyList-layout">
       <Navbar />
-      <main className="mylist-wrapper">
-        <header className="mylist-heading">
+      <main className="MyList-wrapper">
+        <header className="MyList-heading">
           <h1>{profile === "kids" ? "Kids List" : "My List"}</h1>
-          <p>Titles you save to watch later apper here.</p>
+          <p>Titles you save to watch later appear here.</p>
         </header>
-        <section className="mylist-section empty-state">
+        <section className="MyList-section empty-state">
           {hasItems ? (
-            <div className="mylist-grid">
+            <div className="MyList-grid">
               {items.map((item) => {
                 const imageSrc = item.posterPath
                   ? `https://image.tmdb.org/t/p/w342${item.posterPath}`
@@ -37,7 +37,7 @@ const MyList = () => {
                   : fallbackPoster;
                 return (
                   <article
-                    className="title-card mylist-card"
+                    className="title-card MyList-card"
                     key={`${item.mediaType}-${item.id}`}
                   >
                     <Link
@@ -64,7 +64,7 @@ const MyList = () => {
               })}
             </div>
           ) : (
-            <div className="mylist-empty">
+            <div className="MyList-empty">
               <p>
                 You haven&apos;t saved anything yet. Browse the catalog and tap
                 &ldquo;Add to My List&rdquo; to fill this space.
