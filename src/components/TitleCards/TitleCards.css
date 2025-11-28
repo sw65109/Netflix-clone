@@ -51,14 +51,6 @@
     font-size: clamp(0.75rem, 1.5vw, 1rem);
 }
 
-/* .title-card__meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 6px;
-    gap: 8px;
-} */
-
 .title-card__cta {
     border: 1px solid rgba(255, 255, 255, 0.35);
     background: rgba(255, 255, 255, 0.12);
