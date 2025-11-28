@@ -438,7 +438,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - Firebase for authentication services
 - React team for the core framework
 - Vite for the rapid development experience
-
+- GreatStack for providing the tutorial followed to help create Netflix clone
 ---
 
 ## Contact
